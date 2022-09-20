@@ -20,7 +20,7 @@ func () {
 }
 
 echo -e "\e[34m===== Daemon Status Check =====\e[m"
-service_array=(chrony mysql rabbitmw-server etcd)
+service_array=(chrony mysql rabbitmq-server etcd)
 for i in "${service_array[@]}"
 do
     func ${i}
