@@ -2,9 +2,9 @@
 echo "Check if virtualization is supported."
 CHECK=$(egrep -c '(vmx|svm)' /proc/cpuinfo)
 if [ ${CHECK} -gt 0 ]; then
-        echo "\e[32mOK: ${CHECK}\e[m"
+        echo -e "\e[32mOK: ${CHECK}\e[m"
 else
-        echo "\e[31mNG: ${CHECK}\e[m"
+        echo -e "\e[31mNG: ${CHECK}\e[m"
         exit 0;
 fi
 
@@ -25,18 +25,18 @@ if [ $# != 5 ]; then
 fi
 
 if [ -f ${IMAGE_DIR}/${NAME}.qcow2 ]; then
-        echo "\e[31mExists ${NAME}.qcow2. exit.\e[m"
+        echo -e "\e[31mExists ${NAME}.qcow2. exit.\e[m"
         exit 1;
 fi
 
-echo "\e[32m${IMAGE_DIR}/${NAME}.qcow2 creating...\e[m"
+echo -e "\e[32m${IMAGE_DIR}/${NAME}.qcow2 creating...\e[m"
 qemu-img create -f qcow2 ${IMAGE_DIR}/${NAME}.qcow2 ${DISK}G
 if [ $? != 0 ]; then
-        echo "\e[31m!!! Maybe adding sudo will help. !!!\e[m"
+        echo -e "\e[31m!!! Maybe adding sudo will help. !!!\e[m"
         exit 1;
 fi
 
-echo "\e[32mStart virt-install\e[m"
+echo -e "\e[32mStart virt-install\e[m"
 virt-install \
     --name ${NAME} \
     --accelerate \
@@ -50,8 +50,8 @@ virt-install \
     --location /home/yokoo/iso/ubuntu-20.04.5-live-server-amd64.iso,kernel=casper/vmlinuz,initrd=casper/initrd \
     --extra-args "console=ttyS0,115200n8 keymap=ja"
 if [ $? != 0 ]; then
-        echo "\e[31m!!! Installation failed. !!!\e[m"
-        echo "\e[31m!!! Removing ${IMAGE_DIR}/${NAME}.qcow2 !!!\e[m"
+        echo -e "\e[31m!!! Installation failed. !!!\e[m"
+        echo -e "\e[31m!!! Removing ${IMAGE_DIR}/${NAME}.qcow2 !!!\e[m"
         rm ${IMAGE_DIR}/${NAME}.qcow2
         exit 1;
 fi
