@@ -26,6 +26,7 @@ func () {
 }
 
 # main
+systemctl restart systemd-networkd
 if [ ${MODE} = "controller" -o ${MODE} = "con" ]; then
     basic_service=(chrony mysql rabbitmq-server etcd)
     os_service=(glance-api \
